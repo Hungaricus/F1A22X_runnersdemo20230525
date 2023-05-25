@@ -2,8 +2,6 @@ package hu.gde.runnersdemo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import hu.gde.runnersdemo.RunnerEntity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +13,15 @@ public class SponsorEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long sponsorId;
 
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "sponsor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RunnerEntity> runners = new ArrayList<>();
+
     @Column(name = "sponsor_name", nullable = false)
     private String sponsorName;
 
-    @OneToMany(mappedBy = "sponsor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RunnerEntity> runners = new ArrayList<>();
+
 
     public Long getSponsorId() {
         return sponsorId;
@@ -37,4 +39,11 @@ public class SponsorEntity {
         this.sponsorName = sponsorName;
     }
 
+    public List<RunnerEntity> getRunners() {
+        return runners;
+    }
+
+    public void setRunners(List<RunnerEntity> runners) {
+        this.runners = runners;
+    }
 }
