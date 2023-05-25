@@ -33,7 +33,7 @@ public class RunnerEntity {
         return averagePace;
     }
 
-    public long runnerHeight() {
+    public long getRunnerHeight() {
         return runnerHeight;
     }
 
@@ -49,7 +49,7 @@ public class RunnerEntity {
         this.averagePace = averagePace;
     }
 
-    public void runnerHeight(long runnerHeight) {
+    public void setRunnerHeight(long runnerHeight) {
         this.runnerHeight = runnerHeight;
     }
 
