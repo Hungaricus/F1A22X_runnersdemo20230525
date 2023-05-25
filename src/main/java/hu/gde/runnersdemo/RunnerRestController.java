@@ -26,21 +26,25 @@ public class RunnerRestController {
         return runnerRepository.findById(id).orElse(null);
     }
 
-    @GetMapping("/{id}/averagelaptime")
-    public double getAverageLaptime(@PathVariable Long id) {
-        RunnerEntity runner = runnerRepository.findById(id).orElse(null);
-        if (runner != null) {
-            List<LapTimeEntity> laptimes = runner.getLaptimes();
-            int totalTime = 0;
-            for (LapTimeEntity laptime : laptimes) {
-                totalTime += laptime.getTimeSeconds();
-            }
-            double averageLaptime = (double) totalTime / laptimes.size();
-            return averageLaptime;
-        } else {
-            return -1.0;
+    @GetMapping("/tallestrunner")
+    public String getTallestRunner() {
+        List<RunnerEntity> runners = runnerRepository.findAll();
+
+        if (runners.isEmpty()) {
+            return "Nincsenek futók";
         }
+
+        RunnerEntity tallestRunner = runners.get(0);
+        for (RunnerEntity runner : runners) {
+            if (runner.getRunnerHeight() > tallestRunner.getRunnerHeight()) {
+                tallestRunner = runner;
+            }
+        }
+
+        return tallestRunner.getRunnerName();
     }
+
+
 
     @GetMapping("")
     public List<RunnerEntity> getAllRunners() {

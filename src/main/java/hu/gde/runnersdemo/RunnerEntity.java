@@ -49,9 +49,7 @@ public class RunnerEntity {
         this.averagePace = averagePace;
     }
 
-    public void setRunnerHeight(long runnerHeight) {
-        this.runnerHeight = runnerHeight;
-    }
+    public void setRunnerHeight(long runnerHeight) {this.runnerHeight = runnerHeight; }
 
     public List<LapTimeEntity> getLaptimes() {
         return laptimes;
