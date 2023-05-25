@@ -31,7 +31,7 @@ public class RunnerService {
         }
     }
 
-    public void getAverageHeight(Long runnerId, Model model) {
+    public double  getAverageHeight(Model model) {
         List<RunnerEntity> runners = runnerRepository.findAll();
         model.addAttribute("runners", runners);
 
@@ -42,8 +42,11 @@ public class RunnerService {
             }
 
             double averageHeight = (double) totalHeight / runners.size();
-            model.addAttribute("averageHeight", averageHeight);
+            return averageHeight;
+        }else {
+            return -1.0;
         }
     }
+
 
 }

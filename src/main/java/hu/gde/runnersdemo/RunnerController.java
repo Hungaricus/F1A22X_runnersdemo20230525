@@ -13,14 +13,26 @@ import java.util.List;
 @Controller
 public class RunnerController {
 
+    private final RunnerRepository runnerRepository;
+    private final LapTimeRepository lapTimeRepository;
+    private final RunnerService runnerService;
+
     @Autowired
-    private RunnerRepository runnerRepository;
-    @Autowired
-    private LapTimeRepository lapTimeRepository;
+    public RunnerController(RunnerRepository runnerRepository, LapTimeRepository lapTimeRepository, RunnerService runnerService) {
+        this.runnerRepository = runnerRepository;
+        this.lapTimeRepository = lapTimeRepository;
+        this.runnerService = runnerService;
+    }
+
     @GetMapping("/runners")
     public String getAllRunners(Model model) {
         List<RunnerEntity> runners = runnerRepository.findAll();
+
+        double averageHeight = runnerService.getAverageHeight(model);
+
         model.addAttribute("runners", runners);
+        model.addAttribute("averageHeight", averageHeight);
+
         return "runners";
     }
 
