@@ -21,6 +21,17 @@ public class RunnerController {
     public String getAllRunners(Model model) {
         List<RunnerEntity> runners = runnerRepository.findAll();
         model.addAttribute("runners", runners);
+
+        if (!runners.isEmpty()) {
+            long totalHeight = 0;
+            for (RunnerEntity runner : runners) {
+                totalHeight += runner.getRunnerHeight();
+            }
+
+            double averageHeight = (double) totalHeight / runners.size();
+            model.addAttribute("averageHeight", averageHeight);
+        }
+
         return "runners";
     }
 
@@ -64,6 +75,8 @@ public class RunnerController {
         }
         return "redirect:/runner/" + id;
     }
+
+
 
 }
 
