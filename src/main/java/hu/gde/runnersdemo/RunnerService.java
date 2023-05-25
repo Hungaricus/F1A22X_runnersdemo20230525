@@ -2,6 +2,8 @@ package hu.gde.runnersdemo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -28,4 +30,20 @@ public class RunnerService {
             return -1.0;
         }
     }
+
+    public void getAverageHeight(Long runnerId, Model model) {
+        List<RunnerEntity> runners = runnerRepository.findAll();
+        model.addAttribute("runners", runners);
+
+        if (!runners.isEmpty()) {
+            long totalHeight = 0;
+            for (RunnerEntity runner : runners) {
+                totalHeight += runner.getRunnerHeight();
+            }
+
+            double averageHeight = (double) totalHeight / runners.size();
+            model.addAttribute("averageHeight", averageHeight);
+        }
+    }
+
 }
